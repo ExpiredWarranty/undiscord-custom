@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Undiscord Custom
+// @name            Undiscord Remade
 // @description     Delete all messages in a Discord channel or DM (Bulk deletion)
 // @version         1.0.1.2
 // @author          fwxe
@@ -528,7 +528,7 @@
                 <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: This version of Undiscord is still<wbr>in active development, and certain features<br>may not function as expected.</div>
                 <center>
                     <div>---</div>
-                    <div style="font-size: smaller;">Build Version 125</div>
+                    <div style="font-size: smaller;">Build Version 127</div>
                     <div>---</div>
                 </center>
             </pre>
