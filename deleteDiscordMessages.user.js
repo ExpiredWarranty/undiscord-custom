@@ -14,6 +14,7 @@
 // @contributionURL https://www.buymeacoffee.com/vitim
 // @grant           none
 // ==/UserScript==
+const BUILD = "12";
 (function() {
   const style = document.createElement('style');
   style.textContent = `
@@ -158,7 +159,6 @@
 	'use strict';
 	/* rollup-plugin-baked-env */
 	const VERSION = "1.0.1.1";
-	const BUILD = "12";
 
 	var themeCss = (`
 /* undiscord window */
