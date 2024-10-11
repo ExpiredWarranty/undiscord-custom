@@ -157,7 +157,7 @@
 (function () {
 	'use strict';
 	/* rollup-plugin-baked-env */
-	const VERSION = "1.0.1.3";
+	const VERSION = "1.0.1.2";
 
 	var themeCss = (`
 /* undiscord window */
@@ -408,7 +408,7 @@
                     </div>
                 </fieldset>
             </details>
-          <!--  <details>
+            <details>
                 <summary>Message Interval - N/A</summary>
                 <fieldset>
                     <legend>
@@ -432,7 +432,7 @@
                         <br><strong>Note:</strong> This feature is temporarily unavailable.
                     </div>
                 </fieldset>
-            </details> -->
+            </details>
             <details>
                 <summary>Date interval</summary>
                 <fieldset>
@@ -528,7 +528,7 @@
                 <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: This version of Undiscord is still<wbr>in active development, and certain features<br>may not function as expected.</div>
                 <center>
                     <div>---</div>
-                    <div style="font-size: smaller;">Build Version 118</div>
+                    <div style="font-size: smaller;">Build Version 119</div>
                     <div>---</div>
                 </center>
             </pre>
