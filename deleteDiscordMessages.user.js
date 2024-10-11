@@ -531,7 +531,7 @@
                     <div>EMPTY</div>
                     <div>---</div>
 			<br>
-			<div style="font-size: 5px;">Build 12</div>
+			<div style="font-size: smaller;">Build Version 12</div>
                 </center>
             </pre>
             <div class="tbar footer row">
