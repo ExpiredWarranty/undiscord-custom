@@ -528,10 +528,8 @@
                 <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: This version of Undiscord is still<wbr>in active development, and certain features<br>may not function as expected.</div>
                 <center>
                     <div>---</div>
-                    <div>EMPTY</div>
+                    <div style="font-size: smaller;">Build Version 13</div>
                     <div>---</div>
-			<br>
-			<div style="font-size: smaller;">Build Version 12</div>
                 </center>
             </pre>
             <div class="tbar footer row">
