@@ -482,8 +482,8 @@
                     </div>
                     <br>
                     <div class="sectionDescription">
-                        This will affect the speed in which the messages are deleted.
-                        Use the help link for more information.
+                        This will affect the speed at which the messages are deleted, 
+			while the search delay determines how quickly the application processes search requests.
                     </div>
                 </fieldset>
                 <hr>
@@ -528,7 +528,7 @@
                 <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: This version of Undiscord is still<wbr>in active development, and certain features<br>may not function as expected.</div>
                 <center>
                     <div>---</div>
-                    <div style="font-size: smaller;">Build Version 116</div>
+                    <div style="font-size: smaller;">Build Version 117</div>
                     <div>---</div>
                 </center>
             </pre>
