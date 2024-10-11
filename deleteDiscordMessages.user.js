@@ -1,25 +1,163 @@
 // ==UserScript==
-// @name            Undiscord
+// @name            Undiscord Custom
 // @description     Delete all messages in a Discord channel or DM (Bulk deletion)
-// @version         5.2.3
-// @author          victornpb
+// @version         1.0.1
+// @author          fwxe
 // @homepageURL     https://github.com/victornpb/undiscord
-// @supportURL      https://github.com/victornpb/undiscord/discussions
+// @supportURL      https://github.com
 // @match           https://*.discord.com/app
 // @match           https://*.discord.com/channels/*
 // @match           https://*.discord.com/login
 // @license         MIT
 // @namespace       https://github.com/victornpb/deleteDiscordMessages
 // @icon            https://victornpb.github.io/undiscord/images/icon128.png
-// @downloadURL     https://raw.githubusercontent.com/victornpb/deleteDiscordMessages/master/deleteDiscordMessages.user.js
 // @contributionURL https://www.buymeacoffee.com/vitim
 // @grant           none
 // ==/UserScript==
+(function() {
+  const style = document.createElement('style');
+  style.textContent = `
+    #undiscord details > summary {
+      background-color: #333333 !important;
+      transition: background-color 0.3s ease, font-weight 0.3s ease, color 0.3s ease;
+      font-weight: normal !important;
+      color: #d7d7d7 !important;
+      cursor: pointer !important;
+      padding: 10px !important;
+      border-radius: 5px;
+    }
+
+    #undiscord details > summary:hover {
+      background-color: #4b4b4b !important;
+      font-weight: bold !important;
+      color: #ffffff !important;
+    }
+
+    #undiscord details .content {
+      max-height: 0 !important;
+      overflow: hidden !important;
+      transition: max-height 0.5s ease, padding 0.5s ease;
+      padding: 0 10px !important;
+      background-color: #2a2a2a !important;
+    }
+
+    #undiscord details[open] .content {
+      padding: 10px !important;
+      max-height: 1000px !important;
+    }
+
+    #undiscord input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      background: #444;
+      border-radius: 5px;
+      outline: none;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
+      margin: 10px 0;
+    }
+
+    #undiscord input[type="range"]:hover {
+      opacity: 1;
+    }
+
+    #undiscord input[type="range"]::-webkit-slider-runnable-track {
+      height: 8px;
+      background: #444;
+      border-radius: 5px;
+    }
+
+    #undiscord input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #5e5e5e;
+      cursor: pointer;
+      margin-top: -6px;
+      transition: background 0.3s ease;
+    }
+
+    #undiscord input[type="range"]::-webkit-slider-thumb:hover {
+      background: #ffffff;
+    }
+
+    #undiscord input[type="range"]::-moz-range-track {
+      height: 8px;
+      background: #444;
+      border-radius: 5px;
+    }
+
+    #undiscord input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #5e5e5e;
+      cursor: pointer;
+      margin-top: -6px;
+      transition: background 0.3s ease;
+    }
+
+    #undiscord input[type="range"]::-moz-range-thumb:hover {
+      background: #ffffff;
+    }
+
+    #undiscord input[type="range"]::-ms-track {
+      width: 100%;
+      height: 8px;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+
+    #undiscord input[type="range"]::-ms-fill-lower {
+      background: #444;
+      border-radius: 5px;
+    }
+
+    #undiscord input[type="range"]::-ms-fill-upper {
+      background: #444;
+      border-radius: 5px;
+    }
+
+    #undiscord input[type="range"]::-ms-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #5e5e5e;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #undiscord input[type="range"]::-ms-thumb:hover {
+      background: #ffffff;
+    }
+
+    #undiscord button {
+      transition: transform 0.2s ease, font-weight 0.2s ease, color 0.2s ease;
+      font-weight: normal !important;
+      color: #fff !important;
+      background-color: #444 !important;
+      border: 1px solid #666 !important;
+      border-radius: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    #undiscord button:hover {
+      transform: translateY(-2px) !important;
+      font-weight: bold !important;
+      background-color: #5e5e5e !important;
+      color: #000 !important;
+    }
+  `;
+  document.head.appendChild(style);
+})();
 (function () {
 	'use strict';
-
 	/* rollup-plugin-baked-env */
-	const VERSION = "5.2.3";
+	const VERSION = "5.2.1";
 
 	var themeCss = (`
 /* undiscord window */
@@ -127,7 +265,7 @@
 [name^="grab-"] { position: absolute; --size: 6px; --corner-size: 16px; --offset: -1px; z-index: 9; }
 [name^="grab-"]:hover{ background: rgba(128,128,128,0.1); }
 [name="grab-t"] { top: 0px; left: var(--corner-size); right: var(--corner-size); height: var(--size); margin-top: var(--offset); cursor: ns-resize; }
-[name="grab-r"] { top: var(--corner-size); bottom: var(--corner-size); right: 0px; width: var(--size); margin-right: var(--offset); 
+[name="grab-r"] { top: var(--corner-size); bottom: var(--corner-size); right: 0px; width: var(--size); margin-right: var(--offset);
   cursor: ew-resize; }
 [name="grab-b"] { bottom: 0px; left: var(--corner-size); right: var(--corner-size); height: var(--size); margin-bottom: var(--offset); cursor: ns-resize; }
 [name="grab-l"] { top: var(--corner-size); bottom: var(--corner-size); left: 0px; width: var(--size); margin-left: var(--offset); cursor: ew-resize; }
@@ -158,7 +296,7 @@
         </svg>
         <h3>Undiscord</h3>
         <div class="vert-divider"></div>
-        <span> Bulk delete messages</span>
+        <span><strong>Remade</strong> - @fwxe</span>
         <div class="spacer"></div>
         <div id="hide" class="icon" aria-label="Close" role="button" tabindex="0">
             <svg aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
@@ -271,7 +409,7 @@
                 </fieldset>
             </details>
             <details>
-                <summary>Messages interval</summary>
+                <summary>Message Interval - N/A</summary>
                 <fieldset>
                     <legend>
                         Interval of messages
@@ -291,6 +429,7 @@
                     </div>
                     <div class="sectionDescription">
                         Specify an interval to delete messages.
+                        <br><strong>Note:</strong> This feature is temporarily unavailable.
                     </div>
                 </fieldset>
             </details>
@@ -328,7 +467,7 @@
                         <a href="{{WIKI}}/delay" title="Help" target="_blank" rel="noopener noreferrer">help</a>
                     </legend>
                     <div class="input-wrapper">
-                        <input id="searchDelay" type="range" value="30000" step="100" min="100" max="60000">
+                        <input id="searchDelay" type="range" value="0" step="25" min="0" max="1000">
                         <div id="searchDelayValue"></div>
                     </div>
                 </fieldset>
@@ -338,7 +477,7 @@
                         <a href="{{WIKI}}/delay" title="Help" target="_blank" rel="noopener noreferrer">help</a>
                     </legend>
                     <div class="input-wrapper">
-                        <input id="deleteDelay" type="range" value="1000" step="50" min="50" max="10000">
+                        <input id="deleteDelay" type="range" value="500" step="50" min="50" max="5000">
                         <div id="deleteDelayValue"></div>
                     </div>
                     <br>
@@ -365,7 +504,7 @@
             <div></div>
             <div class="info">
                 Undiscord {{VERSION}}
-                <br> victornpb
+                <br> <strong>Note:</strong> This version has been optimized for maximum efficiency, requiring minimal user interaction.
             </div>
         </div>
         <div class="main col">
@@ -384,10 +523,11 @@
                 </div>
             </div>
             <pre id="logArea" class="logarea scroll">
-                <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: Undiscord may be working slower than usual and<wbr>require multiple attempts due to a recent Discord update.<br>We're working on a fix, and we thank you for your patience.</div>
+                <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: This version of Undiscord is still<wbr>in active development, and certain features<br>may not function as expected.</div>
                 <center>
-                    <div>Star <a href="{{HOME}}" target="_blank" rel="noopener noreferrer">this project</a> on GitHub!</div>
-                    <div><a href="{{HOME}}/discussions" target="_blank" rel="noopener noreferrer">Issues or help</a></div>
+                    <div>---</div>
+                    <div>EMPTY</div>
+                    <div>---</div>
                 </center>
             </pre>
             <div class="tbar footer row">
@@ -546,59 +686,60 @@
 
 	    if (this.onStart) this.onStart(this.state, this.stats);
 
-	    do {
-	      this.state.iterations++;
+	    const maxEmptyPages = 200; // Set the limit for consecutive empty pages
+          let emptyPagesCount = 0;
 
-	      log.verb('Fetching messages...');
-	      // Search messages
-	      await this.search();
+          do {
+              this.state.iterations++;
 
-	      // Process results and find which messages should be deleted
-	      await this.filterResponse();
+              log.verb('Fetching messages...');
+              await this.search();
+              await this.filterResponse();
 
-	      log.verb(
-	        `Grand total: ${this.state.grandTotal}`,
-	        `(Messages in current page: ${this.state._seachResponse.messages.length}`,
-	        `To be deleted: ${this.state._messagesToDelete.length}`,
-	        `Skipped: ${this.state._skippedMessages.length})`,
-	        `offset: ${this.state.offset}`
-	      );
-	      this.printStats();
+              log.verb(
+                  `Grand total: ${this.state.grandTotal}`,
+                  `(Messages in current page: ${this.state._seachResponse.messages.length}`,
+                  `To be deleted: ${this.state._messagesToDelete.length}`,
+                  `Skipped: ${this.state._skippedMessages.length})`,
+                  `offset: ${this.state.offset}`
+              );
+              this.printStats();
+              this.calcEtr();
+              log.verb(`Estimated time remaining: ${msToHMS(this.stats.etr)}`);
 
-	      // Calculate estimated time
-	      this.calcEtr();
-	      log.verb(`Estimated time remaining: ${msToHMS(this.stats.etr)}`);
+              if (this.state._messagesToDelete.length > 0) {
+                  emptyPagesCount = 0; // Reset empty pages count
 
-	      // if there are messages to delete, delete them
-	      if (this.state._messagesToDelete.length > 0) {
+                  if (await this.confirm() === false) {
+                      this.state.running = false;
+                      break;
+                  }
 
-	        if (await this.confirm() === false) {
-	          this.state.running = false; // break out of a job
-	          break; // immmediately stop this iteration
-	        }
+                  await this.deleteMessagesFromList();
+              } else if (this.state._skippedMessages.length > 0) {
+                  emptyPagesCount = 0; // Reset empty pages count
 
-	        await this.deleteMessagesFromList();
-	      }
-	      else if (this.state._skippedMessages.length > 0) {
-	        // There are stuff, but nothing to delete (example a page full of system messages)
-	        // check next page until we see a page with nothing in it (end of results).
-	        const oldOffset = this.state.offset;
-	        this.state.offset += this.state._skippedMessages.length;
-	        log.verb('There\'s nothing we can delete on this page, checking next page...');
-	        log.verb(`Skipped ${this.state._skippedMessages.length} out of ${this.state._seachResponse.messages.length} in this page.`, `(Offset was ${oldOffset}, ajusted to ${this.state.offset})`);
-	      }
-	      else {
-	        log.verb('Ended because API returned an empty page.');
-	        log.verb('[End state]', this.state);
-	        if (isJob) break; // break without stopping if this is part of a job
-	        this.state.running = false;
-	      }
+                  const oldOffset = this.state.offset;
+                  this.state.offset += this.state._skippedMessages.length;
+                  log.verb('There\'s nothing we can delete on this page, checking next page...');
+                  log.verb(`Skipped ${this.state._skippedMessages.length} out of ${this.state._seachResponse.messages.length} in this page.`, `(Offset was ${oldOffset}, ajusted to ${this.state.offset})`);
+              } else {
+                  emptyPagesCount++; // Increment empty pages count
 
-	      // wait before next page (fix search page not updating fast enough)
-	      log.verb(`Waiting ${(this.options.searchDelay / 1000).toFixed(2)}s before next page...`);
-	      await wait(this.options.searchDelay);
+                  if (emptyPagesCount >= maxEmptyPages) {
+                      log.verb('Ended because API returned too many consecutive empty pages.');
+                      log.verb('[End state]', this.state);
+                      this.state.running = false;
+                  } else {
+                      log.verb(`API returned an empty page (${emptyPagesCount}/${maxEmptyPages}). Skipping to the next page...`);
+                      this.state.offset++; // Move to the next page
+                  }
+              }
 
-	    } while (this.state.running);
+              log.verb(`Waiting ${(this.options.searchDelay/1000).toFixed(2)}s before next page...`);
+              await wait(this.options.searchDelay);
+
+          } while (this.state.running);
 
 	    this.stats.endTime = new Date();
 	    log.success(`Ended at ${this.stats.endTime.toLocaleString()}! Total time: ${msToHMS(this.stats.endTime.getTime() - this.stats.startTime.getTime())}`);
@@ -655,7 +796,6 @@
 	        ['author_id', this.options.authorId || undefined],
 	        ['channel_id', (this.options.guildId !== '@me' ? this.options.channelId : undefined) || undefined],
 	        ['min_id', this.options.minId ? toSnowflake(this.options.minId) : undefined],
-	        ['max_id', this.options.maxId ? toSnowflake(this.options.maxId) : undefined],
 	        ['sort_by', 'timestamp'],
 	        ['sort_order', 'desc'],
 	        ['offset', this.state.offset],
@@ -728,7 +868,7 @@
 	    // we can only delete some types of messages, system messages are not deletable.
 	    let messagesToDelete = discoveredMessages;
 	    messagesToDelete = messagesToDelete.filter(msg => msg.type === 0 || (msg.type >= 6 && msg.type <= 21));
-	    messagesToDelete = messagesToDelete.filter(msg => msg.pinned ? this.options.includePinned : true);
+	    messagesToDelete = messagesToDelete.filter(msg =>  msg.pinned ? this.options.includePinned : true);
 
 	    // custom filter of messages
 	    try {
@@ -754,10 +894,10 @@
 
 	      log.debug(
 	        // `${((this.state.delCount + 1) / this.state.grandTotal * 100).toFixed(2)}%`,
-	        `[${this.state.delCount + 1}/${this.state.grandTotal}] ` +
-	        `<sup>${new Date(message.timestamp).toLocaleString()}</sup> ` +
-	        `<b>${redact(message.author.username + '#' + message.author.discriminator)}</b>` +
-	        `: <i>${redact(message.content).replace(/\n/g, '↵')}</i>` +
+	        `[${this.state.delCount + 1}/${this.state.grandTotal}] `+
+	        `<sup>${new Date(message.timestamp).toLocaleString()}</sup> `+
+	        `<b>${redact(message.author.username + '#' + message.author.discriminator)}</b>`+
+	        `: <i>${redact(message.content).replace(/\n/g, '↵')}</i>`+
 	        (message.attachments.length ? redact(JSON.stringify(message.attachments)) : ''),
 	        `<sup>{ID:${redact(message.id)}}</sup>`
 	      );
@@ -815,28 +955,11 @@
 	        await wait(w * 2);
 	        return 'RETRY';
 	      } else {
-	        const body = await resp.text();
-
-	        try {
-	          const r = JSON.parse(body);
-
-	          if (resp.status === 400 && r.code === 50083) {
-	            // 400 can happen if the thread is archived (code=50083)
-	            // in this case we need to "skip" this message from the next search
-	            // otherwise it will come up again in the next page (and fail to delete again)
-	            log.warn('Error deleting message (Thread is archived). Will increment offset so we don\'t search this in the next page...');
-	            this.state.offset++;
-	            this.state.failCount++;
-	            return 'FAIL_SKIP'; // Failed but we will skip it next time
-	          }
-
-	          log.error(`Error deleting message, API responded with status ${resp.status}!`, r);
-	          log.verb('Related object:', redact(JSON.stringify(message)));
-	          this.state.failCount++;
-	          return 'FAILED';
-	        } catch (e) {
-	          log.error(`Fail to parse JSON. API responded with status ${resp.status}!`, body);
-	        }
+	        // other error
+	        log.error(`Error deleting message, API responded with status ${resp.status}!`, await resp.json());
+	        log.verb('Related object:', redact(JSON.stringify(message)));
+	        this.state.failCount++;
+	        return 'FAILED';
 	      }
 	    }
 
@@ -1174,13 +1297,7 @@ body.undiscord-pick-message.after [id^="message-content-"]:hover::after {
 	function getToken() {
 	  window.dispatchEvent(new Event('beforeunload'));
 	  const LS = document.body.appendChild(document.createElement('iframe')).contentWindow.localStorage;
-	  try {
-	    return JSON.parse(LS.token);
-	  } catch {
-	    log.info('Could not automatically detect Authorization Token in local storage!');
-	    log.info('Attempting to grab token using webpack');
-	    return (window.webpackChunkdiscord_app.push([[''], {}, e => { window.m = []; for (let c in e.c) window.m.push(e.c[c]); }]), window.m).find(m => m?.exports?.default?.getToken !== void 0).exports.default.getToken();
-	  }
+	  return JSON.parse(LS.token);
 	}
 
 	function getAuthorId() {
@@ -1464,14 +1581,14 @@ body.undiscord-pick-message.after [id^="message-content-"]:hover::after {
 	  //advanced
 	  const searchDelay = parseInt($('input#searchDelay').value.trim());
 	  const deleteDelay = parseInt($('input#deleteDelay').value.trim());
-	 
+
 	  // token
 	  const authToken = $('input#token').value.trim() || fillToken();
 	  if (!authToken) return; // get token already logs an error.
-	  
+
 	  // validate input
 	  if (!guildId) return log.error('You must fill the "Server ID" field!');
-	 
+
 	  // clear logArea
 	  ui.logArea.innerHTML = '';
 
