@@ -464,7 +464,7 @@
                 <fieldset>
                     <legend>
                         Search delay - Default is 0 ms
-                        <a href="{{WIKI}}/delay" title="Help" target="_blank" rel="noopener noreferrer">help</a>
+                        // <a href="{{WIKI}}/delay" title="Help" target="_blank" rel="noopener noreferrer">help</a>
                     </legend>
                     <div class="input-wrapper">
                         <input id="searchDelay" type="range" value="0" step="25" min="0" max="1000">
@@ -474,7 +474,7 @@
                 <fieldset>
                     <legend>
                         Delete delay - Default is 500 ms
-                        <a href="{{WIKI}}/delay" title="Help" target="_blank" rel="noopener noreferrer">help</a>
+                        // <a href="{{WIKI}}/delay" title="Help" target="_blank" rel="noopener noreferrer">help</a>
                     </legend>
                     <div class="input-wrapper">
                         <input id="deleteDelay" type="range" value="500" step="50" min="50" max="5000">
@@ -528,7 +528,7 @@
                 <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: This version of Undiscord is still<wbr>in active development, and certain features<br>may not function as expected.</div>
                 <center>
                     <div>---</div>
-                    <div style="font-size: smaller;">Build Version 114</div>
+                    <div style="font-size: smaller;">Build Version 115</div>
                     <div>---</div>
                 </center>
             </pre>
