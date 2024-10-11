@@ -158,6 +158,7 @@
 	'use strict';
 	/* rollup-plugin-baked-env */
 	const VERSION = "1.0.1.1";
+	const BUILD = "12";
 
 	var themeCss = (`
 /* undiscord window */
@@ -504,6 +505,7 @@
             <div></div>
             <div class="info">
                 Undiscord {{VERSION}}
+		<br> Build {{BUILD}}
                 <br> <strong>Note:</strong> This version has been optimized for maximum efficiency, requiring minimal user interaction.
 		<br>
 		<br>For all support questions or issues, please message <strong>@fwxe</strong> on Discord.
