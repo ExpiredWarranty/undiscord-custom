@@ -410,7 +410,7 @@
             </details>
             <details>
                 <summary>Message Interval - N/A</summary>
-                <fieldset>
+                <!-- <fieldset>
                     <legend>
                         Interval of messages
                         <a href="{{WIKI}}/messageId" title="Help" target="_blank" rel="noopener noreferrer">help</a>
@@ -428,7 +428,7 @@
                         <button id="pickMessageBefore">Pick</button>
                     </div>
                     <div class="sectionDescription">
-                        Specify an interval to delete messages.
+                        Specify an interval to delete messages. -->
                         <br><strong>Note:</strong> This feature is temporarily unavailable.
                     </div>
                 </fieldset>
@@ -528,7 +528,7 @@
                 <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: This version of Undiscord is still<wbr>in active development, and certain features<br>may not function as expected.</div>
                 <center>
                     <div>---</div>
-                    <div style="font-size: smaller;">Build Version 119</div>
+                    <div style="font-size: smaller;">Build Version 120</div>
                     <div>---</div>
                 </center>
             </pre>
