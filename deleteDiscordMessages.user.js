@@ -157,7 +157,7 @@
 (function () {
 	'use strict';
 	/* rollup-plugin-baked-env */
-	const VERSION = "1.0.1";
+	const VERSION = "1.0.1.1";
 
 	var themeCss = (`
 /* undiscord window */
