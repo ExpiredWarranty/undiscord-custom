@@ -463,7 +463,7 @@
                 <summary>Advanced settings</summary>
                 <fieldset>
                     <legend>
-                        Search delay
+                        Search delay - Default is 0 ms
                         <a href="{{WIKI}}/delay" title="Help" target="_blank" rel="noopener noreferrer">help</a>
                     </legend>
                     <div class="input-wrapper">
@@ -473,7 +473,7 @@
                 </fieldset>
                 <fieldset>
                     <legend>
-                        Delete delay
+                        Delete delay - Default is 500 ms
                         <a href="{{WIKI}}/delay" title="Help" target="_blank" rel="noopener noreferrer">help</a>
                     </legend>
                     <div class="input-wrapper">
@@ -528,7 +528,7 @@
                 <div class="" style="background: var(--background-mentioned); padding: .5em;">Notice: This version of Undiscord is still<wbr>in active development, and certain features<br>may not function as expected.</div>
                 <center>
                     <div>---</div>
-                    <div style="font-size: smaller;">Build Version 113</div>
+                    <div style="font-size: smaller;">Build Version 114</div>
                     <div>---</div>
                 </center>
             </pre>
