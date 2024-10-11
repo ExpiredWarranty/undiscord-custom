@@ -14,7 +14,6 @@
 // @contributionURL https://www.buymeacoffee.com/vitim
 // @grant           none
 // ==/UserScript==
-const BUILD = "12";
 (function() {
   const style = document.createElement('style');
   style.textContent = `
@@ -505,7 +504,6 @@ const BUILD = "12";
             <div></div>
             <div class="info">
                 Undiscord {{VERSION}}
-		<br> Build {{BUILD}}
                 <br> <strong>Note:</strong> This version has been optimized for maximum efficiency, requiring minimal user interaction.
 		<br>
 		<br>For all support questions or issues, please message <strong>@fwxe</strong> on Discord.
@@ -532,6 +530,8 @@ const BUILD = "12";
                     <div>---</div>
                     <div>EMPTY</div>
                     <div>---</div>
+			<br>
+			<span style="font-size: 5px;">Build 12</span>
                 </center>
             </pre>
             <div class="tbar footer row">
